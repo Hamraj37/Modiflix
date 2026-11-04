@@ -6,7 +6,7 @@ No build step and no dependencies — everything runs from static files.
 ## Run it
 
 ```bash
-cd playstore
+cd docs
 python3 -m http.server 8080 --bind 127.0.0.1
 ```
 
