@@ -1,0 +1,104 @@
+<!doctype html>
+<html lang="en" data-theme="light">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<meta name="theme-color" content="#ffffff" id="theme-color">
+<title>Play Store — Apps, Games & more</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;500;700&family=Google+Sans+Text:wght@400;500&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="styles.css">
+<link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 48 48'%3E%3Cpath fill='%2300c853' d='M8 6l22 18L8 42z'/%3E%3Cpath fill='%2300b0ff' d='M8 6l15 15-9 9z'/%3E%3Cpath fill='%23ff3d00' d='M8 42l15-15-9-9z'/%3E%3Cpath fill='%23ffc107' d='M30 24L8 6v36z' opacity='.9'/%3E%3C/svg%3E">
+</head>
+<body>
+
+<header class="topbar" id="topbar">
+  <div class="topbar-inner">
+    <a class="logo" href="#/home" aria-label="Play Store home">
+      <svg viewBox="0 0 48 48" width="28" height="28" aria-hidden="true">
+        <defs>
+          <linearGradient id="playGrad" x1="0" y1="0" x2="1" y2="1">
+            <stop offset="0" stop-color="#00d2ff"/>
+            <stop offset=".5" stop-color="#00c853"/>
+            <stop offset="1" stop-color="#ff3d00"/>
+          </linearGradient>
+        </defs>
+        <path fill="url(#playGrad)" d="M11 5.6c-.8.4-1.3 1.2-1.3 2.3v32.2c0 1.1.5 1.9 1.3 2.3L34.6 24 11 5.6Z"/>
+        <path fill="#ffffff" opacity=".18" d="M11 5.6 34.6 24 11 42.4V5.6Z"/>
+      </svg>
+      <span>Play Store</span>
+    </a>
+
+    <div class="search" id="search">
+      <svg class="search-icon" viewBox="0 0 24 24" width="20" height="20" aria-hidden="true"><path fill="currentColor" d="M20.5 19.1 16.9 15.5a7.5 7.5 0 1 0-1.4 1.4l3.6 3.6a1 1 0 0 0 1.4-1.4ZM10 16a6 6 0 1 1 0-12 6 6 0 0 1 0 12Z"/></svg>
+      <input id="search-input" type="search" placeholder="Search apps & games" autocomplete="off" spellcheck="false" aria-label="Search apps and games">
+      <button class="search-clear" id="search-clear" aria-label="Clear search">✕</button>
+      <div class="suggest" id="suggest" hidden></div>
+    </div>
+
+    <div class="top-actions">
+      <button class="icon-btn" id="theme-btn" title="Toggle theme" aria-label="Toggle theme">
+        <svg viewBox="0 0 24 24" width="22" height="22" aria-hidden="true"><path fill="currentColor" d="M12 18a6 6 0 1 0 0-12 6 6 0 0 0 0 12Zm0-15a1 1 0 0 1 1 1v2a1 1 0 1 1-2 0V4a1 1 0 0 1 1-1Zm0 15a1 1 0 0 1 1 1v2a1 1 0 1 1-2 0v-2a1 1 0 0 1 1-1ZM3 12a1 1 0 0 1 1-1h2a1 1 0 1 1 0 2H4a1 1 0 0 1-1-1Zm15 0a1 1 0 0 1 1-1h2a1 1 0 1 1 0 2h-2a1 1 0 0 1-1-1ZM5.6 5.6a1 1 0 0 1 1.4 0L8.4 7a1 1 0 1 1-1.4 1.4L5.6 7a1 1 0 0 1 0-1.4Zm10 10a1 1 0 0 1 1.4 0l1.4 1.4a1 1 0 1 1-1.4 1.4l-1.4-1.4a1 1 0 0 1 0-1.4Zm2.8-10a1 1 0 0 1 0 1.4L17 8.4A1 1 0 1 1 15.6 7l1.4-1.4a1 1 0 0 1 1.4 0Zm-10 10a1 1 0 0 1 0 1.4L7 18.4A1 1 0 1 1 5.6 17L7 15.6a1 1 0 0 1 1.4 0Z"/></svg>
+      </button>
+      <a class="avatar" href="#/library" title="My library" aria-label="My library">A</a>
+    </div>
+  </div>
+
+  <nav class="tabs" id="tabs" aria-label="Sections">
+    <a href="#/home" data-tab="home">For you</a>
+    <a href="#/games" data-tab="games">Games</a>
+    <a href="#/apps" data-tab="apps">Apps</a>
+    <a href="#/movies" data-tab="movies">Movies &amp; TV</a>
+    <a href="#/books" data-tab="books">Books</a>
+    <a href="#/library" data-tab="library">My apps</a>
+  </nav>
+</header>
+
+<main id="view" class="view" tabindex="-1"></main>
+
+<footer class="footer">
+  <div class="footer-inner">
+    <div class="footer-cols">
+      <div>
+        <h4>Shop</h4>
+        <a href="#/games">Games</a><a href="#/apps">Apps</a><a href="#/movies">Movies &amp; TV</a><a href="#/books">Books</a>
+      </div>
+      <div>
+        <h4>Support</h4>
+        <a href="#/library">My apps</a><a href="#/home">Help centre</a><a href="#/home">Refunds</a><a href="#/home">Contact us</a>
+      </div>
+      <div>
+        <h4>About</h4>
+        <a href="#/home">Developers</a><a href="#/home">Privacy</a><a href="#/home">Terms</a><a href="#/admin">Store admin</a>
+      </div>
+    </div>
+    <p class="footer-note">A Play Store–style demo storefront. All apps, films and books are fictional.</p>
+  </div>
+</footer>
+
+<nav class="bottomnav" aria-label="Mobile navigation">
+  <a href="#/games" data-tab="games">
+    <svg viewBox="0 0 24 24" width="22" height="22" aria-hidden="true"><path fill="currentColor" d="M17 6H7a4 4 0 0 0-4 4v3a4 4 0 0 0 7.2 2.4l.3-.4h3l.3.4A4 4 0 0 0 21 13v-3a4 4 0 0 0-4-4Zm-9 7a1 1 0 0 1-1-1H5.8a1 1 0 0 1 0-2H7V8.8a1 1 0 0 1 2 0V10h1.2a1 1 0 0 1 0 2H9a1 1 0 0 1-1 1Zm8 .2a1.2 1.2 0 1 1 0-2.4 1.2 1.2 0 0 1 0 2.4Zm2-3a1.2 1.2 0 1 1 0-2.4 1.2 1.2 0 0 1 0 2.4Z"/></svg>
+    Games
+  </a>
+  <a href="#/apps" data-tab="apps">
+    <svg viewBox="0 0 24 24" width="22" height="22" aria-hidden="true"><path fill="currentColor" d="M4 4h7v7H4V4Zm9 0h7v7h-7V4ZM4 13h7v7H4v-7Zm9 0h7v7h-7v-7Z"/></svg>
+    Apps
+  </a>
+  <a href="#/search" data-tab="search">
+    <svg viewBox="0 0 24 24" width="22" height="22" aria-hidden="true"><path fill="currentColor" d="M20.5 19.1 16.9 15.5a7.5 7.5 0 1 0-1.4 1.4l3.6 3.6a1 1 0 0 0 1.4-1.4ZM10 16a6 6 0 1 1 0-12 6 6 0 0 1 0 12Z"/></svg>
+    Search
+  </a>
+  <a href="#/library" data-tab="library">
+    <svg viewBox="0 0 24 24" width="22" height="22" aria-hidden="true"><path fill="currentColor" d="M4 4a1 1 0 0 1 1-1h9a3 3 0 0 1 3 3v14.5a.8.8 0 0 1-1.3.6L12 18l-3.7 3.1a.8.8 0 0 1-1.3-.6V4Zm3 1v12.3l2.7-2.2a1 1 0 0 1 1.3 0l2.7 2.2V6a1 1 0 0 0-1-1H7Z"/></svg>
+    Library
+  </a>
+</nav>
+
+<div class="toast" id="toast" role="status" aria-live="polite"></div>
+
+<script src="data.js"></script>
+<script src="app.js"></script>
+</body>
+</html>
