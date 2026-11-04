@@ -1,4 +1,4 @@
-/* Play Store clone — client app */
+/* Modiflix — client app */
 (function () {
   'use strict';
 
@@ -885,7 +885,7 @@
         '<div>' +
           '<div class="block-title"><h2>' + (isMovie ? 'About this film' : 'About this book') + '</h2></div>' +
           '<div class="about-text">' + esc(isMovie
-            ? 'A ' + item.studio + ' production. Available in up to 4K HDR, with subtitles and dubbing in 20 languages. Rentals are available for 30 days, and once started you have 48 hours to finish watching.\n\nThis title is part of the ' + item.studio + ' collection on Play Store.'
+            ? 'A ' + item.studio + ' production. Available in up to 4K HDR, with subtitles and dubbing in 20 languages. Rentals are available for 30 days, and once started you have 48 hours to finish watching.\n\nThis title is part of the ' + item.studio + ' collection on Modiflix.'
             : 'From ' + item.author + ', this title is available to read on your phone, tablet or the web. Your place is synced across devices automatically, and you can download it for offline reading.\n\nPublished by Northwind Press. ' + item.pages + ' pages.') + '</div>' +
           '<div class="tags">' + ['#new', isMovie ? '#film' : '#book', isMovie ? '#4k' : '#ebook'].map(function (t) { return '<span class="tag">' + t + '</span>'; }).join('') + '</div>' +
         '</div>' +
@@ -983,7 +983,7 @@
     var page = r.seg[0] || 'home';
     var html = '';
     var tab = page;
-    var title = 'Play Store';
+    var title = 'Modiflix';
 
     if (page === 'app' && r.seg[1]) {
       var item = byId(r.seg[1]);
@@ -992,29 +992,29 @@
       } else if (item.cat) {
         html = detailView(item);
         tab = item.cat === 'game' ? 'games' : 'apps';
-        title = item.name + ' – Play Store';
+        title = item.name + ' – Modiflix';
       } else {
         html = mediaView(item);
         tab = item.studio ? 'movies' : 'books';
-        title = item.title + ' – Play Store';
+        title = item.title + ' – Modiflix';
       }
     } else if (page === 'games' || page === 'apps') {
       html = browseView(page, r.q.get('genre') || '');
-      title = (page === 'games' ? 'Games' : 'Apps') + ' – Play Store';
+      title = (page === 'games' ? 'Games' : 'Apps') + ' – Modiflix';
     } else if (page === 'movies') {
       html = moviesView();
-      title = 'Movies & TV – Play Store';
+      title = 'Movies & TV – Modiflix';
     } else if (page === 'books') {
       html = booksView();
-      title = 'Books – Play Store';
+      title = 'Books – Modiflix';
     } else if (page === 'search') {
       var q = r.q.get('q') || '';
       if (q && q !== searchInput.value) searchInput.value = q;
       html = searchView(q);
-      title = q ? '“' + q + '” – Play Store' : 'Search – Play Store';
+      title = q ? '“' + q + '” – Modiflix' : 'Search – Modiflix';
     } else if (page === 'library') {
       html = libraryView();
-      title = 'My apps – Play Store';
+      title = 'My apps – Modiflix';
     } else if (page === 'admin') {
       html = adminView();
       title = 'Store admin';
@@ -1022,7 +1022,7 @@
       html = homeView();
       page = 'home';
       tab = 'home';
-      title = 'Play Store – Apps, Games & more';
+      title = 'Modiflix – Apps, Games & more';
     }
 
     view.innerHTML = html;
@@ -1238,5 +1238,5 @@
   render();
 
   /* expose for debugging */
-  window.PLAY = { state: state, render: render };
+  window.MODIFLIX = { state: state, render: render };
 })();

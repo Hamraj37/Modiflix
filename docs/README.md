@@ -1,6 +1,6 @@
-# Play Store clone
+# Modiflix
 
-A responsive, Play Store–style storefront built with plain HTML, CSS and JavaScript.
+A responsive app, game, movie and book storefront built with plain HTML, CSS and JavaScript.
 No build step and no dependencies — everything runs from static files.
 
 ## Run it

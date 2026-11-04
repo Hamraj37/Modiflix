@@ -1,4 +1,4 @@
-/* Catalog data for the Play Store clone */
+/* Catalog data for Modiflix */
 
 const APPS = [
   // ---------------- Games ----------------
