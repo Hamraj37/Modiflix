@@ -241,7 +241,7 @@
       return '<div class="empty" style="padding:80px 20px">' +
         '<div class="e-icon">🗂️</div><h3>The store is empty</h3>' +
         '<p>Add your first app from the store admin.</p>' +
-        '<a class="chip active" href="#/admin">Open store admin</a></div>';
+        '<a class="chip active" href="admin.html">Open store admin</a></div>';
     }
     var featured = APPS.filter(function (a) { return a.featured; }).slice(0, 3);
     if (!featured.length) featured = APPS.slice(0, 3);
@@ -270,7 +270,7 @@
       return '<div class="empty" style="padding:70px 20px"><div class="e-icon">🗂️</div>' +
         '<h3>No ' + (kind === 'games' ? 'games' : 'apps') + ' yet</h3>' +
         '<p>Add one from the store admin to see it here.</p>' +
-        '<a class="chip active" href="#/admin">Open store admin</a></div>';
+        '<a class="chip active" href="admin.html">Open store admin</a></div>';
     }
     var list = genre ? all.filter(function (a) { return a.genre === genre; }) : all;
     var sortByReviews = list.slice().sort(function (a, b) { return b.reviews - a.reviews; });
@@ -364,7 +364,7 @@
 
     var out = '<div class="page-title"><h1>My apps</h1><p>' +
       (ids.length ? ids.length + (ids.length === 1 ? ' app installed' : ' apps installed') + ' on this device' : 'Apps you install will show up here') +
-      ' · <a class="admin-link" href="#/admin">Store admin</a>' +
+      ' · <a class="admin-link" href="admin.html">Store admin</a>' +
       '</p></div>';
 
     if (!ids.length) {
@@ -470,7 +470,7 @@
           '<h1>Manage apps</h1>' +
           '<p>Edit listings, add new apps or remove them. Changes are saved on this device and appear in the store right away.</p>' +
         '</div>' +
-        '<a class="btn-sm" href="#/home">View store ↗</a>' +
+        '<a class="btn-sm" href="index.html#/home">View store ↗</a>' +
       '</div>' +
 
       '<div class="admin-stats">' +
@@ -1016,8 +1016,8 @@
       html = libraryView();
       title = 'My apps – Modiflix';
     } else if (page === 'admin') {
-      html = adminView();
-      title = 'Store admin';
+      location.href = 'admin.html';
+      return;
     } else {
       html = homeView();
       page = 'home';
@@ -1231,6 +1231,24 @@
   window.addEventListener('hashchange', function () {
     closeAppForm();
     render();
+  });
+
+  window.addEventListener('storage', function (e) {
+    if (e.key === CATALOG_KEY || e.key === 'gp_installed') {
+      try {
+        state.installed = JSON.parse(localStorage.getItem('gp_installed') || '{}') || {};
+      } catch (err) {}
+      loadSavedCatalog();
+      render({ keepScroll: true });
+    }
+  });
+
+  window.addEventListener('pageshow', function () {
+    try {
+      state.installed = JSON.parse(localStorage.getItem('gp_installed') || '{}') || {};
+    } catch (err) {}
+    loadSavedCatalog();
+    render({ keepScroll: true });
   });
 
   /* boot */

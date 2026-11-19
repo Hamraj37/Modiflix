@@ -21,7 +21,7 @@ Then open <http://127.0.0.1:8080>.
 - **App detail pages** with screenshots, long description, rating breakdown, reviews, app info, data-safety panel and similar apps.
 - **Simulated installs**: progress bar, installed/open state, library ("My apps") with update buttons, persisted in `localStorage`.
 - **Library** listing everything you installed.
-- **Store admin** at `#/admin` (linked in the footer and in "My apps"):
+- **Store admin** at `admin.html` (linked in the footer and in "My apps"):
   - Search and filter the catalog, see live stats.
   - Add apps or games, edit any field (name, developer, type, genre, icon, colours, rating, reviews, downloads, size, age rating, badge, featured flag, tagline, description).
   - Delete listings with an inline confirmation, reset the catalog to defaults, clear installed apps.
@@ -33,9 +33,11 @@ Then open <http://127.0.0.1:8080>.
 | File | Purpose |
 | --- | --- |
 | `index.html` | Shell: header, search, navigation, footer, script tags |
+| `admin.html` | Store admin: manage catalog, add/edit/delete listings |
 | `styles.css` | Design tokens, components, admin panel, responsive/dark-theme rules |
 | `data.js` | Fictional catalog: 30 apps/games, 8 films, 8 books, reviews |
-| `app.js` | Hash router, views, install simulation, search, theme, catalog admin and persistence |
+| `app.js` | Hash router, views, install simulation, search, theme persistence |
+| `admin.js` | Store admin logic, form modal, search/filters, persistence |
 
 All apps, films, books and reviews are fictional demo content.
 
