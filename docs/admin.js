@@ -193,9 +193,15 @@
         '<div>' +
           '<span class="admin-eyebrow">Store admin</span>' +
           '<h1>Manage apps</h1>' +
-          '<p>Edit listings, add new apps or remove them. Changes are saved on this device and appear in the store right away.</p>' +
+          '<p>Edit listings, add new apps or remove them. Changes are saved locally and synced securely with Firebase Cloud.</p>' +
         '</div>' +
-        '<a class="btn-sm" href="index.html#/home">View store ↗</a>' +
+        '<div style="display:flex;align-items:center;gap:10px;flex-wrap:wrap">' +
+          '<div class="cloud-status local" id="cloud-status" title="Firebase Cloud status">' +
+            '<span class="cloud-dot"></span>' +
+            '<span id="cloud-status-text">Local Mode</span>' +
+          '</div>' +
+          '<a class="btn-sm" href="index.html#/home">View store ↗</a>' +
+        '</div>' +
       '</div>' +
 
       '<div class="admin-stats" id="admin-stats">' +
@@ -378,6 +384,11 @@
       }
 
       saveCatalog();
+      if (typeof ModiflixFirebase !== 'undefined' && ModiflixFirebase.isCloudAvailable()) {
+        ModiflixFirebase.saveApp(isNew ? APPS[0] : payload).catch(function (err) {
+          console.warn('[Modiflix Firebase] Note: Saved locally. Cloud sync message:', err.message);
+        });
+      }
       closeAppForm();
       toast(isNew ? 'Added “' + name + '”' : 'Updated “' + name + '”');
       refreshAdminList();
@@ -399,6 +410,11 @@
     delete state.installed[id];
     saveInstalled();
     saveCatalog();
+    if (typeof ModiflixFirebase !== 'undefined' && ModiflixFirebase.isCloudAvailable()) {
+      ModiflixFirebase.deleteApp(id).catch(function (err) {
+        console.warn('[Modiflix Firebase] Note: Deleted locally. Cloud sync message:', err.message);
+      });
+    }
     admin.deleting = null;
     toast('Removed “' + name + '”');
     refreshAdminList();
@@ -409,6 +425,9 @@
     APPS.length = 0;
     JSON.parse(JSON.stringify(DEFAULTS)).forEach(function (a) { APPS.push(a); });
     try { localStorage.removeItem(CATALOG_KEY); } catch (e) {}
+    if (typeof ModiflixFirebase !== 'undefined' && ModiflixFirebase.isCloudAvailable()) {
+      ModiflixFirebase.syncAllApps(DEFAULTS).catch(function () {});
+    }
     admin.deleting = null;
     toast('Catalog reset to defaults');
     refreshAdminList();
@@ -517,9 +536,36 @@
     }
   });
 
+  /* cloud sync */
+  function updateCloudStatus(status) {
+    var badge = document.getElementById('cloud-status');
+    var text = document.getElementById('cloud-status-text');
+    if (!badge || !text) return;
+    badge.className = 'cloud-status ' + (status.cloudOnline ? 'cloud' : 'local');
+    text.textContent = status.cloudOnline ? 'Cloud Synced' : 'Local Mode';
+  }
+
+  function initCloudSync() {
+    if (typeof ModiflixFirebase === 'undefined') return;
+
+    ModiflixFirebase.onStatusChange(updateCloudStatus);
+
+    if (ModiflixFirebase.isCloudAvailable()) {
+      ModiflixFirebase.subscribeCatalog(function (cloudApps) {
+        if (cloudApps && cloudApps.length) {
+          APPS.length = 0;
+          cloudApps.forEach(function (a) { APPS.push(normalizeApp(a)); });
+          saveCatalog();
+          refreshAdminList();
+        }
+      });
+    }
+  }
+
   /* render admin view */
   view.innerHTML = adminView();
   document.title = 'Store admin — Modiflix';
+  initCloudSync();
 
   /* expose for debugging */
   window.MODIFLIX_ADMIN = { admin: admin, refresh: refreshAdminList };

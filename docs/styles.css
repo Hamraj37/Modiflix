@@ -979,6 +979,46 @@ section { margin: 0 0 12px; }
   color: var(--green);
 }
 .admin-title .btn-sm { margin-bottom: 4px; }
+.cloud-status {
+  display: inline-flex;
+  align-items: center;
+  gap: 7px;
+  font-size: 12px;
+  font-weight: 500;
+  padding: 6px 12px;
+  border-radius: 20px;
+  border: 1px solid var(--line);
+  background: var(--bg-soft);
+  color: var(--text-soft);
+  user-select: none;
+  transition: all .15s ease;
+}
+.cloud-dot {
+  width: 8px;
+  height: 8px;
+  border-radius: 50%;
+  background: var(--text-faint);
+  transition: background .2s ease, box-shadow .2s ease;
+}
+.cloud-status.cloud .cloud-dot,
+.cloud-status.online .cloud-dot {
+  background: #34a853;
+  box-shadow: 0 0 0 2px rgba(52, 168, 83, .25);
+}
+.cloud-status.syncing .cloud-dot {
+  background: #fbbc04;
+  box-shadow: 0 0 0 2px rgba(251, 188, 4, .25);
+  animation: cloudPulse 1.2s infinite ease-in-out;
+}
+.cloud-status.local .cloud-dot,
+.cloud-status.offline .cloud-dot {
+  background: #fbbc04;
+}
+@keyframes cloudPulse {
+  0% { transform: scale(0.9); opacity: 0.7; }
+  50% { transform: scale(1.15); opacity: 1; }
+  100% { transform: scale(0.9); opacity: 0.7; }
+}
 
 .admin-stats {
   display: grid;

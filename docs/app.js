@@ -83,7 +83,21 @@
     }
   }
 
+  function initCloudSync() {
+    if (typeof ModiflixFirebase === 'undefined' || !ModiflixFirebase.isCloudAvailable()) return;
+
+    ModiflixFirebase.subscribeCatalog(function (cloudApps) {
+      if (cloudApps && cloudApps.length) {
+        APPS.length = 0;
+        cloudApps.forEach(function (a) { APPS.push(normalizeApp(a)); });
+        saveCatalog();
+        render({ keepScroll: true });
+      }
+    });
+  }
+
   loadSavedCatalog();
+  initCloudSync();
 
   /* ---------------- utils ---------------- */
   function $(sel, el) { return (el || document).querySelector(sel); }

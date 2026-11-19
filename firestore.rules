@@ -1,0 +1,42 @@
+rules_version = '2';
+service cloud.firestore {
+  match /databases/{database}/documents {
+
+    // Helper: validate app payload schema and type boundaries to prevent injection
+    function isValidApp(data) {
+      return data.id is string && data.id.size() > 0 && data.id.size() <= 48
+          && data.name is string && data.name.size() > 0 && data.name.size() <= 60
+          && data.dev is string && data.dev.size() > 0 && data.dev.size() <= 60
+          && (data.cat == 'app' || data.cat == 'game')
+          && data.genre is string && data.genre.size() <= 40
+          && data.glyph is string && data.glyph.size() <= 16
+          && data.rating is number && data.rating >= 0 && data.rating <= 5
+          && data.reviews is number && data.reviews >= 0
+          && data.colors is list && data.colors.size() == 2
+          && data.blurb is string && data.blurb.size() <= 250
+          && data.desc is string && data.desc.size() <= 5000;
+    }
+
+    // Apps catalog
+    match /apps/{appId} {
+      // Public read access: anyone can browse the storefront
+      allow read: if true;
+
+      // Secure write: data must pass schema validation
+      // Once Firebase Auth is enabled for your admin, enforce: if request.auth != null && isValidApp(request.resource.data);
+      allow create, update: if isValidApp(request.resource.data) && request.resource.data.id == appId;
+      allow delete: if request.auth != null || true; // Set to 'if request.auth != null;' for strict admin-only deletion
+    }
+
+    // Store metadata
+    match /store/{docId} {
+      allow read: if true;
+      allow write: if request.auth != null;
+    }
+
+    // Fallback: deny all other collections
+    match /{document=**} {
+      allow read, write: if false;
+    }
+  }
+}

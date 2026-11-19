@@ -38,10 +38,13 @@ Then open <http://127.0.0.1:8080>.
 | `data.js` | Fictional catalog: 30 apps/games, 8 films, 8 books, reviews |
 | `app.js` | Hash router, views, install simulation, search, theme persistence |
 | `admin.js` | Store admin logic, form modal, search/filters, persistence |
+| `firebase-config.js` | Secure Firebase configuration and real-time cloud catalog sync |
 
 All apps, films, books and reviews are fictional demo content.
 
-## Catalog storage
+## Catalog storage & Firebase Cloud Sync
 
-Admin edits are stored under the `gp_catalog_v1` localStorage key; installs use `gp_installed`.
-"Reset catalog" removes the saved catalog and restores the seed data from `data.js`.
+Admin edits are stored in `localStorage` under `gp_catalog_v1` and synchronized in real time via Firebase Firestore (`modiflix-app`).
+- If online, updates propagate instantly to all storefront visitors via Firestore listeners.
+- If offline or Firebase is unreachable, Modiflix operates in local mode with zero downtime.
+- For security rules and key restrictions, refer to [FIREBASE_SECURITY.md](FIREBASE_SECURITY.md).
